@@ -30,7 +30,7 @@ Mount() {
     resize2fs "/storage/${SERVICE}/image.dmg" "${DISK}"
     mount -t auto -o loop "/storage/${SERVICE}/image.dmg" "/storage/${SERVICE}"
   fi
-  chown 20601:20601 "/storage/${SERVICE}"
+  chown 1000:100 "/storage/${SERVICE}"
 }
 
 Start() {
