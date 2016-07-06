@@ -1,8 +1,20 @@
-FROM ubuntu:14.04
-MAINTAINER Kentaro Imajo <docker@imoz.jp>
-RUN useradd --home-dir=/home/cloud-admin --create-home --uid=1000 --gid=100 --shell=/bin/bash cloud-admin
-RUN apt-get update -qq && apt-get install -y wget
-RUN mkdir -p /config
-RUN wget -O /config/dropbox.tar.gz "https://www.dropbox.com/download?plat=lnx.x86_64"
-ADD config/setup.sh /config/setup.sh
-CMD sudo --user=cloud-admin --login -- /home/cloud-admin/.dropbox-dist/dropboxd
+FROM debian:sid
+
+MAINTAINER Jakob Runge <sicarius@g4t3.de>
+
+RUN apt-get update \
+ && apt-get install -y \
+    wget \
+    procps \
+    python-gtk2 \
+    python \
+    libatk1.0-0 \
+    libcairo2 \
+    libglib2.0-0 \
+    libgtk2.0-0 \
+    libpango1.0-0 \
+    lsb-release \
+    python-gpgme \
+ && wget -O dropbox.deb "https://www.dropbox.com/download?dl=packages/debian/dropbox_2015.10.28_amd64.deb" \
+ && dpkg -i dropbox.deb \
+ && useradd --home-dir=/home/u --create-home --uid=1000 --gid=100 --shell=/bin/bash u
