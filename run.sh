@@ -1,3 +1,4 @@
 #!/bin/bash
-docker run -it runjak/dropbox:latest bash
-#  --user 1000:100
+docker run --user 1000:100 \
+           -v $(pwd)/data:/home/u \
+           -it --rm runjak/dropbox:latest

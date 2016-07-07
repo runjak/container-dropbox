@@ -18,3 +18,16 @@ RUN apt-get update \
  && wget -O dropbox.deb "https://www.dropbox.com/download?dl=packages/debian/dropbox_2015.10.28_amd64.deb" \
  && dpkg -i dropbox.deb \
  && useradd --home-dir=/home/u --create-home --uid=1000 --gid=100 --shell=/bin/bash u
+
+RUN echo "#!/bin/bash\n\
+if [ ! -d \".dropbox-dist\" ]; then\n\
+  dropbox start -i\n\
+  dropbox stop\n\
+fi\n\
+.dropbox-dist/dropboxd\
+" > entrypoint.sh \
+ && chmod a+x entrypoint.sh
+
+WORKDIR /home/u
+
+ENTRYPOINT ["/entrypoint.sh"]
