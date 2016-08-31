@@ -19,14 +19,8 @@ RUN apt-get update \
  && dpkg -i dropbox.deb \
  && useradd --home-dir=/home/u --create-home --uid=1000 --gid=100 --shell=/bin/bash u
 
-RUN echo "#!/bin/bash\n\
-if [ ! -d \".dropbox-dist\" ]; then\n\
-  dropbox start -i\n\
-  dropbox stop\n\
-fi\n\
-.dropbox-dist/dropboxd\
-" > entrypoint.sh \
- && chmod a+x entrypoint.sh
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod a+x /entrypoint.sh
 
 WORKDIR /home/u
 
